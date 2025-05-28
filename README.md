@@ -2,6 +2,9 @@
 
 - create React App
 - Configured Tailwaind Css
+- Header
+- Login form
+- Sign up form
 
 
 # Features
@@ -10,7 +13,7 @@
 	- Sign in / sign up form
 	- redirect to Browse Page
 
--Browse (after authentication)
+- Browse (after authentication)
 	- Header
 	- Main Movie
 		- Trailer in Background
