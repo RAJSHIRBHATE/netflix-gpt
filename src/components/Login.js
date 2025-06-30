@@ -4,19 +4,18 @@ import { checkValidData } from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  updateProfile
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { USER_AVTAR } from "../utils/constants";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
 
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -43,24 +42,24 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL: "https://avatars.githubusercontent.com/u/71583113?s=400&u=51291bc29c4a924831098a6342cb2e980d9f4870&v=4",
+            photoURL:
+              USER_AVTAR,
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
               dispatch(
                 addUser({
-                            uid: uid,
-                            email: email,
-                            displayName: displayName,
-                            photoURL: photoURL,
-                          })
-              )
-              navigate("/browse");
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+              
             })
             .catch((error) => {
               setErrorMessage(error.message);
             });
-          
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -79,8 +78,6 @@ const Login = () => {
           // Signed in
           const user = userCredential.user;
 
-          console.log(user);
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
